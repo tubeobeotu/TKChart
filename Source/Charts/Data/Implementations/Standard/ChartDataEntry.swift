@@ -13,7 +13,7 @@ import Foundation
 
 open class ChartDataEntry: ChartDataEntryBase, NSCopying
 {
-    @objc open var align:TextAlignment = .center
+    @objc open var align:NSTextAlignment = .center
     @objc open var labelPoint = CGPoint.zero
     /// the x value
     @objc open var x = 0.0

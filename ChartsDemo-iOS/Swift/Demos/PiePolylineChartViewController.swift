@@ -10,7 +10,7 @@ import UIKit
 import Charts
 
 class PiePolylineChartViewController: DemoBaseViewController {
-
+    
     @IBOutlet var chartView: PieChartView!
     @IBOutlet var sliderX: UISlider!
     @IBOutlet var sliderY: UISlider!
@@ -27,7 +27,6 @@ class PiePolylineChartViewController: DemoBaseViewController {
                         .toggleXValues,
                         .togglePercent,
                         .toggleHole,
-                        .toggleLabelsMinimumAngle,
                         .animateX,
                         .animateY,
                         .animateXY,
@@ -44,7 +43,7 @@ class PiePolylineChartViewController: DemoBaseViewController {
         chartView.setExtraOffsets(left: 20, top: 0, right: 20, bottom: 0)
         chartView.isGetMarkerPosition = true
 
-        sliderX.value = 3
+        sliderX.value = 21
         sliderY.value = 100
         self.slidersValueChanged(nil)
         
@@ -71,8 +70,8 @@ class PiePolylineChartViewController: DemoBaseViewController {
                 
                 self.view.addSubview(subView)
             }
-            self.chartView.notifyDataSetChanged()
-            self.chartView.notifyDataSetChanged()
+            self.chartView.setNeedsDisplay()
+//            self.chartView.notifyDataSetChanged()
         }
         
     }
@@ -141,10 +140,6 @@ class PiePolylineChartViewController: DemoBaseViewController {
             
         case .toggleHole:
             chartView.drawHoleEnabled = !chartView.drawHoleEnabled
-            chartView.setNeedsDisplay()
-            
-        case .toggleLabelsMinimumAngle:
-            chartView.sliceTextDrawingThreshold = chartView.sliceTextDrawingThreshold == 0.0 ? 20.0 : 0.0
             chartView.setNeedsDisplay()
 
         case .drawCenter:

@@ -15,57 +15,69 @@ class LineChartTimeViewController: DemoBaseViewController {
     @IBOutlet var chartView: LineChartView!
     @IBOutlet var sliderX: UISlider!
     @IBOutlet var sliderTextX: UITextField!
-    //Tuuuu
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.title = "Time Line Chart"
-        self.options = []
+        self.options = [.toggleValues,
+                        .toggleFilled,
+                        .toggleCircles,
+                        .toggleCubic,
+                        .toggleHorizontalCubic,
+                        .toggleStepped,
+                        .toggleHighlight,
+                        .animateX,
+                        .animateY,
+                        .animateXY,
+                        .saveToGallery,
+                        .togglePinchZoom,
+                        .toggleAutoScaleMinMax,
+                        .toggleData]
+        
         chartView.delegate = self
         
-        chartView.chartDescription.enabled = false
+        chartView.chartDescription?.enabled = false
         
         chartView.dragEnabled = true
-        chartView.setScaleEnabled(false)
+        chartView.setScaleEnabled(true)
         chartView.pinchZoomEnabled = false
         chartView.highlightPerDragEnabled = true
+        
         chartView.backgroundColor = .white
         
         chartView.legend.enabled = false
         
-//        let xAxis = chartView.xAxis
-//        xAxis.labelPosition = .topInside
-//        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
-//        xAxis.labelTextColor = UIColor(red: 255/255, green: 192/255, blue: 56/255, alpha: 1)
-//        xAxis.drawAxisLineEnabled = false
-//        xAxis.drawGridLinesEnabled = true
-//        xAxis.centerAxisLabelsEnabled = true
-//        xAxis.granularity = 3600
-//        xAxis.valueFormatter = DateValueFormatter()
+        let xAxis = chartView.xAxis
+        xAxis.labelPosition = .topInside
+        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+        xAxis.labelTextColor = UIColor(red: 255/255, green: 192/255, blue: 56/255, alpha: 1)
+        xAxis.drawAxisLineEnabled = false
+        xAxis.drawGridLinesEnabled = true
+        xAxis.centerAxisLabelsEnabled = true
+        xAxis.granularity = 3600
+        xAxis.valueFormatter = DateValueFormatter()
         
-//        let leftAxis = chartView.leftAxis
-//        leftAxis.labelPosition = .insideChart
-//        leftAxis.labelFont = .systemFont(ofSize: 12, weight: .light)
-//        leftAxis.drawGridLinesEnabled = true
-//        leftAxis.granularityEnabled = true
-//        leftAxis.axisMinimum = 0
-//        leftAxis.axisMaximum = 170
-//        leftAxis.yOffset = -9
-//        leftAxis.labelTextColor = UIColor(red: 255/255, green: 192/255, blue: 56/255, alpha: 1)
+        let leftAxis = chartView.leftAxis
+        leftAxis.labelPosition = .insideChart
+        leftAxis.labelFont = .systemFont(ofSize: 12, weight: .light)
+        leftAxis.drawGridLinesEnabled = true
+        leftAxis.granularityEnabled = true
+        leftAxis.axisMinimum = 0
+        leftAxis.axisMaximum = 170
+        leftAxis.yOffset = -9
+        leftAxis.labelTextColor = UIColor(red: 255/255, green: 192/255, blue: 56/255, alpha: 1)
 
-        chartView.xAxis.enabled = false
+        
         chartView.rightAxis.enabled = false
-        chartView.leftAxis.enabled = false
         
         chartView.legend.form = .line
         
-        sliderX.value = 15
+        sliderX.value = 100
         slidersValueChanged(nil)
         
         chartView.animate(xAxisDuration: 2.5)
-        
-        chartView.gridBackgroundColor = UIColor.black
     }
     
     override func updateChartData() {
@@ -91,7 +103,7 @@ class LineChartTimeViewController: DemoBaseViewController {
         
         let set1 = LineChartDataSet(entries: values, label: "DataSet 1")
         set1.axisDependency = .left
-        set1.setColor(UIColor.green)
+        set1.setColor(UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1))
         set1.lineWidth = 1.5
         set1.drawCirclesEnabled = false
         set1.drawValuesEnabled = false
@@ -99,44 +111,42 @@ class LineChartTimeViewController: DemoBaseViewController {
         set1.fillColor = UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1)
         set1.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
         set1.drawCircleHoleEnabled = false
-        set1.drawHorizontalHighlightIndicatorEnabled = false
+        
         let data = LineChartData(dataSet: set1)
         data.setValueTextColor(.white)
         data.setValueFont(.systemFont(ofSize: 9, weight: .light))
-        data.isHighlightEnabled = true
+        
         chartView.data = data
     }
     
     override func optionTapped(_ option: Option) {
-        guard let data = chartView.data else { return }
-
         switch option {
         case .toggleFilled:
-            for case let set as LineChartDataSet in data {
+            for set in chartView.data!.dataSets as! [LineChartDataSet] {
                 set.drawFilledEnabled = !set.drawFilledEnabled
             }
             chartView.setNeedsDisplay()
             
         case .toggleCircles:
-            for case let set as LineChartDataSet in data {
+            for set in chartView.data!.dataSets as! [LineChartDataSet] {
                 set.drawCirclesEnabled = !set.drawCirclesEnabled
             }
             chartView.setNeedsDisplay()
             
         case .toggleCubic:
-            for case let set as LineChartDataSet in data {
+            for set in chartView.data!.dataSets as! [LineChartDataSet] {
                 set.mode = (set.mode == .cubicBezier) ? .linear : .cubicBezier
             }
             chartView.setNeedsDisplay()
             
         case .toggleStepped:
-            for case let set as LineChartDataSet in data {
+            for set in chartView.data!.dataSets as! [LineChartDataSet] {
                 set.mode = (set.mode == .stepped) ? .linear : .stepped
             }
             chartView.setNeedsDisplay()
             
         case .toggleHorizontalCubic:
-            for case let set as LineChartDataSet in data {
+            for set in chartView.data!.dataSets as! [LineChartDataSet] {
                 set.mode = (set.mode == .cubicBezier) ? .horizontalBezier : .cubicBezier
             }
             chartView.setNeedsDisplay()

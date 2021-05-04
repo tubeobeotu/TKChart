@@ -14,6 +14,7 @@ import CoreGraphics
 
 open class PieChartDataEntry: ChartDataEntry
 {
+    @objc open var showMarkerLine: Bool = true
     public required init()
     {
         super.init()
@@ -107,8 +108,6 @@ open class PieChartDataEntry: ChartDataEntry
         get { return y }
         set { y = newValue }
     }
-    
-    @objc open var showMarkerLine: Bool = true
         
     // MARK: NSCopying
     

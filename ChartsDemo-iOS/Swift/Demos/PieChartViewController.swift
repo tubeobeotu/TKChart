@@ -30,7 +30,6 @@ class PieChartViewController: DemoBaseViewController {
                         .togglePercent, 
                         .toggleHole,
                         .toggleIcons,
-                        .toggleLabelsMinimumAngle,
                         .animateX,
                         .animateY,
                         .animateXY,
@@ -42,6 +41,15 @@ class PieChartViewController: DemoBaseViewController {
         self.setup(pieChartView: chartView)
         
         chartView.delegate = self
+        
+        let l = chartView.legend
+        l.horizontalAlignment = .right
+        l.verticalAlignment = .top
+        l.orientation = .vertical
+        l.xEntrySpace = 7
+        l.yEntrySpace = 0
+        l.yOffset = 0
+//        chartView.legend = l
 
         // entry label styling
         chartView.entryLabelColor = .white
@@ -51,7 +59,6 @@ class PieChartViewController: DemoBaseViewController {
         sliderY.value = 100
         self.slidersValueChanged(nil)
         
-        shouldHideData = true
         chartView.animate(xAxisDuration: 1.4, easingOption: .easeOutBack)
     }
     
@@ -75,7 +82,7 @@ class PieChartViewController: DemoBaseViewController {
         let set = PieChartDataSet(entries: entries, label: "Election Results")
         set.drawIconsEnabled = false
         set.sliceSpace = 2
-    
+        
         
         set.colors = ChartColorTemplates.vordiplom()
             + ChartColorTemplates.joyful()
@@ -94,7 +101,7 @@ class PieChartViewController: DemoBaseViewController {
         data.setValueFormatter(DefaultValueFormatter(formatter: pFormatter))
         
         data.setValueFont(.systemFont(ofSize: 11, weight: .light))
-        data.setValueTextColor(.black)
+        data.setValueTextColor(.white)
         
         chartView.data = data
         chartView.highlightValues(nil)
@@ -114,10 +121,6 @@ class PieChartViewController: DemoBaseViewController {
             chartView.drawHoleEnabled = !chartView.drawHoleEnabled
             chartView.setNeedsDisplay()
             
-        case .toggleLabelsMinimumAngle:
-            chartView.sliceTextDrawingThreshold = chartView.sliceTextDrawingThreshold == 0.0 ? 20.0 : 0.0
-            chartView.setNeedsDisplay()
-
         case .drawCenter:
             chartView.drawCenterTextEnabled = !chartView.drawCenterTextEnabled
             chartView.setNeedsDisplay()

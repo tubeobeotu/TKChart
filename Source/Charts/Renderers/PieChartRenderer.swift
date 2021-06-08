@@ -428,7 +428,7 @@ open class PieChartRenderer: DataRenderer
                     let polyline2Length = dataSet.valueLineVariableLength
                         ? labelRadius * valueLineLength2 * abs(sin(transformedAngle.DEG2RAD))
                         : labelRadius * valueLineLength2
-
+//
                     let pt0 = CGPoint(
                         x: line1Radius * sliceXBase + center.x,
                         y: line1Radius * sliceYBase + center.y)
